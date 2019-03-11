@@ -16,17 +16,21 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     if(gamePlaying) {
         // 1. Random number
         var dice = Math.floor(Math.random() * 6) + 1;
+        // var dice2 = Math.floor(Math.random() * 6) + 1;
 
         //2. Display the result
+        // this will be trickier, and I don't like putting display block in the JS, but whatever. you'd just be adding a display for a second die, which you'd call dice2DOM, and the image would be dice2DOM.src = 'dice-' + dice2 + '.png';
         var diceDOM = document.querySelector('.dice');
+        // var dice2DOM = document.getElementById('whatever-you-call-the-container'); I'd shy away from a class here if you're using two different dice pics. You'lll have to change the equerySelector to id. 
         diceDOM.style.display = 'block';
         diceDOM.src = 'dice-' + dice + '.png';
 
 
         //3. Update the round score IF the rolled number was NOT a 1
+        // if (dice !== 1 && dice2 !==1)
         if (dice !== 1) {
             //Add score
-            roundScore += dice;
+            roundScore += dice; //roundScore += (dice + dice2);
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
         } else {
             //Next player
@@ -128,6 +132,9 @@ function init() {
 YOUR 3 CHALLENGES
 Change the game to follow these rules:
 1. A player looses his ENTIRE score when he rolls two 6 in a row. After that, it's the next player's turn. (Hint: Always save the previous dice roll in a separate variable)
+
+For this one, I'd use const rolls = { currentRoll: dice, previousRoll: null }; and then set the values using the event listener. You'd update the current based on the dice and dice2, then you'd assign previousRoll the former value of currentRoll before assigning currentRoll the value of the Math.floor situation.
+
 2. Add an input field to the HTML where players can set the winning score, so that they can change the predefined score of 100. (Hint: you can read that value with the .value property in JavaScript. This is a good oportunity to use google to figure this out :)
 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
 */
