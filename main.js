@@ -35,19 +35,31 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     }    
 });
 
+const scoreForm = document.getElementById('winning-score-form');
+const scoreButton = document.getElementById('score-button');
+const winningScoreDisplay = document.getElementById('winning-score-display');
 
 
+scoreButton.addEventListener('click', event => {
+    event.preventDefault();
+    formData = new FormData(scoreForm);
+    winningScoreDisplay.textContent = formData.get('winning-score');
+});
 
 document.querySelector('.btn-hold').addEventListener('click', function() {
     if (gamePlaying) {
         // Add CURRENT score to GLOBAL score
         scores[activePlayer] += roundScore;
 
+        //get current winning score
+        const winningScore = winningScoreDisplay.textContent;
+        console.log(winningScore);
+
         // Update the UI
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
         // Check if player won the game
-        if (scores[activePlayer] >= 100) {
+        if (scores[activePlayer] >= winningScore) {
             document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
             document.querySelector('.dice').style.display = 'none';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
